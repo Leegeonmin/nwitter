@@ -1,7 +1,10 @@
 import { authService } from "FbInstance";
 import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import React, { useState } from "react";
 
@@ -41,6 +44,21 @@ const Auth = () => {
     }
   };
   const toggleAccount = () => setNetAccount((prev) => !prev);
+  const onSocialClick = async (event) => {
+    let provider;
+    switch (event.target.name) {
+      case "google":
+        provider = new GoogleAuthProvider();
+
+        break;
+      case "github":
+        provider = new GithubAuthProvider();
+        break;
+    }
+    const data = await signInWithPopup(authService, provider);
+    console.log(data);
+  };
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -71,8 +89,12 @@ const Auth = () => {
         {newAccount ? "Log In" : "Create Account"}
       </span>
       <div>
-        <button>Continue with Google</button>
-        <button>Continue with Google</button>
+        <button onClick={onSocialClick} name="google">
+          Continue with Google
+        </button>
+        <button onClick={onSocialClick} name="github">
+          Continue with Github
+        </button>
       </div>
     </div>
   );

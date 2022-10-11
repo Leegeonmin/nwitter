@@ -1,4 +1,15 @@
+import { CustomButton } from "components/CustomButton";
 import React from "react";
-
- const Profile = () => <span>Profile</span>;
- export default Profile;
+import { signOut } from "firebase/auth";
+import { authService } from "FbInstance";
+const Profile = () => {
+  const signOutOnClick = async () => await signOut(authService);
+  const inText = "Log Out";
+  return (
+    <>
+      <span>Profile</span>
+      <CustomButton onClickFunction={signOutOnClick} innerText={inText} />
+    </>
+  );
+};
+export default Profile;

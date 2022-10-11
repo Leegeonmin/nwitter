@@ -4,13 +4,13 @@ import { authService } from "FbInstance";
 import { CustomButton } from "../components/CustomButton";
 
 const Home = () => {
-  const signOutOnClick = async () => await signOut(authService);
+  const signOutClick = async () => await signOut(authService);
   const inText = "Log Out";
 
   return (
     <>
       <span>Home</span>
-      <CustomButton onClickFunction={signOutOnClick} innerText={inText} />
+      <CustomButton onClickFunction={signOutClick} innerText={inText} />
     </>
   );
 };

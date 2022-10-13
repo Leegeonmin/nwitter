@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { dbService } from "FbInstance";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import OnChangedInput from "./InputOnChange";
+import OnChangedInput, { OnChange, ReactInputChange } from "./ReactInputChange";
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -16,12 +16,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
   const onUpdateClick = () => {
     setEditing((prev) => !prev);
   };
-  const onChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setNewNweet(value);
-  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     const NweetsDoc = doc(dbService, "nweets", `${nweetObj.id}`);
@@ -34,12 +29,12 @@ const Nweet = ({ nweetObj, isOwner }) => {
       {editing ? (
         <>
           <form onSubmit={onSubmit}>
-            <OnChangedInput
-              type={"text"}
-              placeholder={"Edit yourrr Nweet"}
-              onChangeFunction={setNewNweet}
+            <input
+              type="text"
+              placeholder="뭘봐"
+              onChange={(event) => ReactInputChange(event, setNewNweet)}
               value={newNweet}
-            />
+            ></input>
             <input type="submit" value="Update Nweet"></input>
           </form>
           <button onClick={onUpdateClick}>Cancel</button>
